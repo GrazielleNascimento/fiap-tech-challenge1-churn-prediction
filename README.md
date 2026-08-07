@@ -20,11 +20,13 @@ O objetivo é entender a base de clientes, realizar a análise exploratória e c
 
 ```text
 churn-etapa-1/
-├── data/raw/                  # base original
-├── notebooks/                # análise e modelo
-├── docs/                     # ML Canvas e dicionário de dados
-├── models/                   # modelo salvo
-├── reports/                  # gráficos e métricas
+├── data/raw/                        # base original
+├── notebooks/
+│   └── etapa_1/
+│       └── 01_eda_baseline.ipynb   # análise exploratória e baseline
+├── docs/                            # ML Canvas e dicionário de dados
+├── models/                          # modelos salvos
+├── reports/                         # métricas e resultados
 ├── requirements.txt
 └── README.md
 ```
@@ -47,7 +49,7 @@ py -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-5. Abra `notebooks/01_eda_baseline.ipynb`.
+5. Abra `notebooks/etapa_1/01_eda_baseline.ipynb`.
 6. Selecione o kernel da `.venv`.
 7. Execute as células de cima para baixo.
 
@@ -57,18 +59,70 @@ O CSV já está em `data/raw`. Caso o arquivo seja movido, o notebook abre uma j
 
 Os resultados esperados são próximos de:
 
-- acurácia: 0,8055
-- precision: 0,6572
-- recall: 0,5588
-- F1-score: 0,6040
-- ROC-AUC: 0,8419
+- accuracy: 0.8055
+- precision: 0.6572
+- recall: 0.5588
+- F1-score: 0.6040
+- ROC-AUC: 0.8419
 
 Esses valores podem variar um pouco conforme a versão das bibliotecas.
-
 
 ## ML Canvas
 
 O ML Canvas está disponível em dois locais:
 
-- dentro do notebook `notebooks/01_eda_baseline.ipynb`;
+- dentro do notebook `notebooks/etapa_1/01_eda_baseline.ipynb`;
 - no documento separado `docs/ml_canvas.md`.
+
+## Etapa 2
+
+# Modelagem e avaliação
+
+Na etapa 2, o foco é treinar, comparar e avaliar modelos de classificação para churn, com destaque para:
+
+- Rede Neural simples com `MLPClassifier`;
+- comparação com modelos lineares e base line;
+- aplicação de validação cruzada;
+- avaliação com métricas como acurácia, precision, recall, F1-score e ROC-AUC;
+- teste de estratégias para lidar com desbalanceamento (threshold, undersampling, oversampling e SMOTE);
+- exportação do modelo final salvo em `.joblib` e dos resultados em arquivos JSON/CSV.
+
+## Estrutura da etapa 2
+
+```text
+churn-etapa-1/
+├── data/raw/                        # base original
+├── notebooks/
+│   ├── etapa_1/
+│   │   └── 01_eda_baseline.ipynb
+│   └── etapa_2/
+│       ├── 02_mlp_model.ipynb
+│       └── 03_ensemble_models.ipynb # notebook futuro
+│
+├── docs/                            # documentação e referências
+├── models/                          # modelos salvos
+├── reports/metrics/                 # métricas exportadas em JSON/CSV
+├── requirements.txt
+└── README.md
+```
+
+## Resultados do MLP campeão
+
+- accuracy: 0.7881
+- precision: 0.5920
+- recall: 0.6511
+- F1-score: 0.6192
+- ROC-AUC: 0.8433
+
+## Fluxo sugerido para a etapa 2
+
+1. Executar o notebook de redes neurais em `notebooks/etapa_2/02_mlp_model.ipynb`.
+2. Em seguida, utilizar um notebook complementar em `notebooks/etapa_2/03_ensemble_models.ipynb` para treinar modelos de ensemble.
+3. Comparar os resultados em uma tabela consolidada.
+4. Escolher um modelo campeão e salvar o artefato final em `models/`.
+
+## Entregáveis esperados
+
+- tabela comparativa de modelos;
+- modelo final escolhido e salvo em `.joblib`;
+- métricas registradas em arquivos de relatório.
