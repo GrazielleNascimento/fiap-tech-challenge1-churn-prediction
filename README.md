@@ -82,12 +82,14 @@ Na etapa 2, o foco é treinar, comparar e avaliar modelos de classificação par
 
 - Rede Neural simples com `MLPClassifier` (notebook `02_mlp_model.ipynb`);
 - modelos de ensemble e baseline linear — Random Forest, Gradient Boosting e Regressão Logística (notebook `03_ensemble_models.ipynb`);
+- comparação entre os modelos (linear, árvore/ensemble e MLP) e escolha de um modelo campeão;
 - aplicação de validação cruzada estratificada;
 - avaliação com métricas como acurácia, precision, recall, F1-score e ROC-AUC;
 - teste de estratégias para lidar com desbalanceamento (threshold, undersampling, oversampling, class weight e SMOTE);
 - análise de trade-off de custo entre falso positivo e falso negativo;
-- rastreamento de todos os experimentos no MLflow;
 - exportação do modelo final salvo em `.joblib` e dos resultados em arquivos JSON/CSV.
+
+Os dois notebooks da etapa 2 compartilham a mesma metodologia (mesmo pré-processador, mesma validação cruzada estratificada em 5 folds e as mesmas funções de métrica), o que torna a comparação entre modelos justa.
 
 ## Estrutura da etapa 2
 
@@ -98,31 +100,16 @@ churn-etapa-1/
 │   ├── etapa_1/
 │   │   └── 01_eda_baseline.ipynb
 │   └── etapa_2/
-│       ├── 02_mlp_model.ipynb        # rede neural (MLP) + MLflow
-│       └── 03_ensemble_models.ipynb  # RF, GB e baseline linear + MLflow
+│       ├── 02_mlp_model.ipynb        # rede neural (MLPClassifier)
+│       └── 03_ensemble_models.ipynb  # RF, GB e baseline linear
 │
 ├── docs/                            # documentação e referências
 ├── models/                          # modelos salvos (.joblib)
 ├── reports/                         # tabelas comparativas e de custo (CSV)
 │   └── metrics/                     # métricas dos campeões (JSON)
-├── mlruns/                          # tracking do MLflow (gerado localmente, não versionado)
 ├── requirements.txt
 └── README.md
 ```
-
-Os dois notebooks da etapa 2 compartilham a mesma metodologia (mesmo pré-processador, mesma validação cruzada estratificada em 5 folds e as mesmas funções de métrica), o que torna a comparação entre modelos justa.
-
-## MLflow
-
-Ambos os notebooks registram seus experimentos no MLflow, no backend de arquivos local (`mlruns/`), sob o experimento `churn-etapa-2`. Para visualizar parâmetros, métricas e comparar os runs, rode na raiz do projeto:
-
-```powershell
-mlflow ui
-```
-
-e acesse `http://127.0.0.1:5000`.
-
-A pasta `mlruns/` é gerada localmente ao executar os notebooks e não deve ser versionada (está no `.gitignore`).
 
 ## Resultados do MLP campeão
 
@@ -144,14 +131,14 @@ Modelo campeão do notebook `03_ensemble_models.ipynb` (Gradient Boosting com th
 - F1-score: 0.6296
 - ROC-AUC: 0.8459
 
-Comparado ao MLP campeão, o Gradient Boosting apresentou maior recall (0,696 contra 0,651) e maior F1-score (0,630 contra 0,619), com ROC-AUC praticamente igual. Como o objetivo é identificar clientes propensos ao cancelamento, o recall e o custo de negócio pesam mais do que a acurácia pura — por isso o Gradient Boosting com threshold 0,35 foi escolhido como modelo campeão consolidado da etapa 2 e exportado como artefato final.
+Comparado ao MLP campeão, o Gradient Boosting apresentou maior recall (0,696 contra 0,651) e maior F1-score (0,630 contra 0,619), com ROC-AUC praticamente igual. Como o objetivo do problema é identificar clientes propensos ao cancelamento, o recall e o custo de negócio pesam mais do que a acurácia pura — por isso o Gradient Boosting com threshold 0,35 foi escolhido como modelo campeão consolidado da etapa 2 e exportado como artefato final.
 
 Esses valores podem variar um pouco conforme a versão das bibliotecas.
 
 ## Fluxo sugerido para a etapa 2
 
-1. Executar o notebook de redes neurais em `notebooks/etapa_2/02_mlp_model.ipynb`. Ele treina o MLP, registra os experimentos no MLflow e salva `reports/mlp_resultados.csv`.
-2. Executar o notebook de ensembles em `notebooks/etapa_2/03_ensemble_models.ipynb`. Ele treina RF, GB e a Regressão Logística, registra no MLflow, carrega os resultados do MLP e monta a tabela comparativa consolidada.
+1. Executar o notebook de redes neurais em `notebooks/etapa_2/02_mlp_model.ipynb`. Ele treina o MLP e salva os resultados em `reports/mlp_resultados.csv`.
+2. Executar o notebook de ensembles em `notebooks/etapa_2/03_ensemble_models.ipynb`. Ele treina RF, GB e a Regressão Logística, carrega os resultados do MLP e monta a tabela comparativa consolidada.
 3. Comparar os resultados na tabela consolidada e na análise de custo.
 4. Escolher o modelo campeão e salvar o artefato final em `models/`.
 
@@ -162,4 +149,4 @@ Esses valores podem variar um pouco conforme a versão das bibliotecas.
 - tabela comparativa de modelos (MLP, RF, GB e Regressão Logística);
 - análise de custo (falso positivo vs. falso negativo);
 - modelo final escolhido e salvo em `.joblib`;
-- métricas registradas em arquivos de relatório (CSV/JSON) e no MLflow.
+- métricas registradas em arquivos de relatório (CSV/JSON).
