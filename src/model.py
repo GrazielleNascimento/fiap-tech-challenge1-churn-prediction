@@ -12,7 +12,6 @@ class ModelPredictor:
         self.threshold = self.artifact["threshold"]
 
     def predict(self, input_df: pd.DataFrame):
-        # O pipeline já contem o preprocessamento, só passamos o DF bruto
         proba = self.pipeline.predict_proba(input_df)[:, 1]
         prediction = (proba >= self.threshold).astype(int)
         
