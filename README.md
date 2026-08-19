@@ -150,3 +150,186 @@ Esses valores podem variar um pouco conforme a versão das bibliotecas.
 - análise de custo (falso positivo vs. falso negativo);
 - modelo final escolhido e salvo em `.joblib`;
 - métricas registradas em arquivos de relatório (CSV/JSON).
+
+## Etapa 3
+
+# Documentação da Etapa 3: Engenharia de Software e API de Inferência
+
+Esta etapa tem como objetivo transformar o modelo de churn em um serviço de inferência acessível por API, com validação de entrada, testes automatizados e execução local em ambiente virtual.
+
+## 1. Como iniciar o projeto e o ambiente virtual
+
+Para rodar a aplicação localmente e executar os testes, abra o terminal na raiz do projeto e siga os passos abaixo:
+
+1. Criar o ambiente virtual:
+
+```bash
+python -m venv venv
+```
+
+2. Ativar o ambiente virtual:
+
+- No Windows (Git Bash):
+
+```bash
+source venv/Scripts/activate
+```
+
+- No Windows (CMD / PowerShell):
+
+```bash
+venv\Scripts\activate
+```
+
+3. Instalar as dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Executar os testes automatizados:
+
+```bash
+python -m pytest -v
+```
+
+5. Iniciar o servidor da API:
+
+```bash
+uvicorn src.main:app --reload
+```
+
+A documentação interativa pode ser acessada em:
+
+- http://127.0.0.1:8000/docs
+
+## 2. Descrição dos arquivos da etapa 3
+
+### `src/model.py`
+
+Responsável por encapsular a lógica de Machine Learning. Esse módulo carrega o artefato salvo em `models/` e aplica a inferência sobre os dados do cliente.
+
+Sua função principal é:
+
+- carregar o modelo `.joblib`;
+- extrair o pipeline e o threshold de decisão;
+- receber um DataFrame com as entradas;
+- calcular a probabilidade de churn;
+- retornar a previsão final (`0` ou `1`).
+
+### `src/main.py`
+
+Arquivo principal da API FastAPI. Ele define a validação dos dados de entrada com Pydantic e expõe os endpoints disponíveis.
+
+Principais elementos:
+
+- `ChurnInput`: modelo de entrada estruturado;
+- `GET /health`: verifica se a API está online;
+- `POST /predict`: recebe os dados do cliente e retorna a predição.
+
+### `tests/test_api.py`
+
+Arquivo de testes automatizados com Pytest e `TestClient` do FastAPI. Ele valida o comportamento real da API sem precisar subir um servidor manualmente.
+
+Os testes cobrem:
+
+- resposta correta do health check;
+- retorno válido do endpoint de predição;
+- tipos esperados na resposta (`int` e `float`).
+
+## 3. Endpoints da API
+
+### `GET /health`
+
+Retorna o estado da aplicação:
+
+```json
+{
+  "status": "API is online"
+}
+```
+
+### `POST /predict`
+
+Recebe as características do cliente e devolve a previsão e a probabilidade de churn.
+
+Exemplo de resposta:
+
+```json
+{
+  "churn_prediction": 0,
+  "probability": 0.1784
+}
+```
+
+## 4. Casos de teste para validação
+
+### Caso 1: perfil de baixo risco de churn
+
+```json
+{
+  "gender": "Female",
+  "SeniorCitizen": 0,
+  "Partner": "Yes",
+  "Dependents": "Yes",
+  "tenure": 71,
+  "PhoneService": "Yes",
+  "MultipleLines": "Yes",
+  "InternetService": "DSL",
+  "OnlineSecurity": "Yes",
+  "OnlineBackup": "Yes",
+  "DeviceProtection": "Yes",
+  "TechSupport": "Yes",
+  "StreamingTV": "Yes",
+  "StreamingMovies": "Yes",
+  "Contract": "Two year",
+  "PaperlessBilling": "No",
+  "PaymentMethod": "Bank transfer (automatic)",
+  "MonthlyCharges": 85.2,
+  "TotalCharges": 6015.5
+}
+```
+
+### Caso 2: perfil de alto risco de churn
+
+```json
+{
+  "gender": "Male",
+  "SeniorCitizen": 1,
+  "Partner": "No",
+  "Dependents": "No",
+  "tenure": 2,
+  "PhoneService": "Yes",
+  "MultipleLines": "Yes",
+  "InternetService": "Fiber optic",
+  "OnlineSecurity": "No",
+  "OnlineBackup": "No",
+  "DeviceProtection": "No",
+  "TechSupport": "No",
+  "StreamingTV": "Yes",
+  "StreamingMovies": "Yes",
+  "Contract": "Month-to-month",
+  "PaperlessBilling": "Yes",
+  "PaymentMethod": "Electronic check",
+  "MonthlyCharges": 95.5,
+  "TotalCharges": 180.5
+}
+```
+
+## 5. Fluxo de uso da API
+
+1. Criar e ativar o ambiente virtual.
+2. Instalar as dependências com `pip install -r requirements.txt`.
+3. Executar `python -m pytest -v` para validar a aplicação.
+4. Iniciar a API com `uvicorn src.main:app --reload`.
+5. Acessar a documentação no endpoint `/docs`.
+6. Enviar um JSON válido para `/predict`.
+7. Verificar a resposta com a predição e a probabilidade.
+
+## 6. Resumo
+
+A Etapa 3 transforma o modelo treinado em um serviço de inferência prático, organizado e testável. A estrutura separa claramente a lógica do modelo, a API e os testes, permitindo uso simples e confiável em ambiente local e em futuras integrações.
+
+---
+
+
