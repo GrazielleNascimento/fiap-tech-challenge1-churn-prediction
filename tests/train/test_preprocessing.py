@@ -3,7 +3,6 @@
 import pandas as pd
 
 from src.train.preprocessing import (
-    build_preprocessor,
     load_dataset,
     split_features_target,
 )

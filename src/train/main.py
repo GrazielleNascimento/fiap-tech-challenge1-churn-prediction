@@ -63,7 +63,7 @@ def save_artifact(pipeline: Pipeline) -> None:
 
 def save_metrics(
     y_true: pd.Series,
-    y_pred: pd.Series,
+    y_pred: ndarray | pd.Series,
     y_proba: ndarray,
 ) -> None:
     """Calcula e salva as métricas do modelo em arquivo .json."""

@@ -1,4 +1,7 @@
 """Fornece de preprocessamento para WA_Fn-UseC_-Telco-Customer-Churn.csv."""
+
+from pathlib import Path
+
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -13,7 +16,7 @@ from src.common.config import (
 )
 
 
-def load_dataset(path: str) -> pd.DataFrame:
+def load_dataset(path: str | Path) -> pd.DataFrame:
     """Carrega e realiza tratamento nos dados brutos do csv."""
     df = pd.read_csv(path)
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
@@ -29,17 +32,23 @@ def split_features_target(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
 
 def build_preprocessor() -> ColumnTransformer:
     """Cria pipeline de pré-processamento dos dados."""
-    numeric_pipeline = Pipeline([
-        ("imputer", SimpleImputer(strategy="median")),
-        ("scaler", StandardScaler()),
-    ])
+    numeric_pipeline = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
+        ]
+    )
 
-    categorical_pipeline = Pipeline([
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("onehot", OneHotEncoder(handle_unknown="ignore")),
-    ])
+    categorical_pipeline = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("onehot", OneHotEncoder(handle_unknown="ignore")),
+        ]
+    )
 
-    return ColumnTransformer([
-        ("num", numeric_pipeline, NUMERIC_COLUMNS),
-        ("cat", categorical_pipeline, CATEGORICAL_COLUMNS),
-    ])
+    return ColumnTransformer(
+        [
+            ("num", numeric_pipeline, NUMERIC_COLUMNS),
+            ("cat", categorical_pipeline, CATEGORICAL_COLUMNS),
+        ]
+    )

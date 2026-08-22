@@ -1,4 +1,5 @@
 """Testes relativos à src/api/main."""
+
 from fastapi.testclient import TestClient
 
 from src.api.main import app
@@ -6,6 +7,7 @@ from src.api.main import app
 client = TestClient(app)
 
 STATUS_CODE_OK = 200
+
 
 def test_health() -> None:
     response = client.get("/health")

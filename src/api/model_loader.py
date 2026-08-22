@@ -16,6 +16,7 @@ class ModelArtifact(TypedDict):
     threshold: float
     model_name: str
 
+
 @lru_cache
 def get_artifact() -> ModelArtifact:
     """Carrega os artefato do modelo."""

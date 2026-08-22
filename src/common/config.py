@@ -9,7 +9,7 @@ CHAMPION_THRESHOLD = 0.35
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_PATH = PROJECT_ROOT / "data" / "raw" / "WA_Fn-UseC_-Telco-Customer-Churn.csv"
 MODEL_PATH = PROJECT_ROOT / "models" / f"{CHAMPION_NAME}.joblib"
-METRICS_PATH = PROJECT_ROOT / "reports" / "metrics" /f"metricas_{CHAMPION_NAME}.json"
+METRICS_PATH = PROJECT_ROOT / "reports" / "metrics" / f"metricas_{CHAMPION_NAME}.json"
 
 TARGET_COLUMN = "Churn"
 ID_COLUMN = "customerID"
