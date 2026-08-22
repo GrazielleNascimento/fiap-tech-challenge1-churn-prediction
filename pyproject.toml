@@ -28,6 +28,20 @@ dev = [
     "nbval>=0.11.0",
 ]
 
+docs = [
+    "sphinx>=9.1.0",
+    "sphinx-autodoc-typehints>=3.13.2",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.0,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.mypy]
+python_version = "3.12"
+explicit_package_bases = true
+mypy_path = "src"
+
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = ["CPY001"]

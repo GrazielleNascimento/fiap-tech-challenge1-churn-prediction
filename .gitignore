@@ -42,5 +42,10 @@ venv.bak/
 # Ruff stuff:
 .ruff_cache/
 
-# macOS 
+# OS generated files
 .DS_Store
+
+# sphinx
+docs/_build/
+docs/build/
+docs/source/generated
