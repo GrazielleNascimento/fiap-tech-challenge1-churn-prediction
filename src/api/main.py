@@ -13,13 +13,13 @@ app = FastAPI(title="Churn Prediction API")
 
 
 @app.get("/health")
-def health_check() -> HealthResponse:
+def health() -> HealthResponse:
     """Verifica se a API está disponível."""
     return HealthResponse(status="API is online")
 
 
 @app.post("/predict")
-def predict_churn(
+def post_predict(
     churn_input: PredictInput,
     pipeline: Annotated[Pipeline, Depends(get_pipeline)],
     threshold: Annotated[float, Depends(get_threshold)],
