@@ -1,8 +1,8 @@
-"""Testes relativos à src/train/preprocessing."""
+"""Testes relativos à churn_prediction/train/preprocessing."""
 
 import pandas as pd
 
-from src.train.preprocessing import (
+from churn_prediction.train.preprocessing import (
     load_dataset,
     split_features_target,
 )

@@ -1,8 +1,8 @@
-"""Testes relativos à src/api/main."""
+"""Testes relativos à churn_prediction/api/main."""
 
 from fastapi.testclient import TestClient
 
-from src.api.main import app
+from churn_prediction.api.main import app
 
 client = TestClient(app)
 

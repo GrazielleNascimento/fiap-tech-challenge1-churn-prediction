@@ -6,8 +6,12 @@ import pandas as pd
 from fastapi import Depends, FastAPI
 from sklearn.pipeline import Pipeline
 
-from src.api.model_loader import get_pipeline, get_threshold
-from src.api.schemas import HealthResponse, PredictInput, PredictResponse
+from churn_prediction.api.model_loader import get_pipeline, get_threshold
+from churn_prediction.api.schemas import (
+    HealthResponse,
+    PredictInput,
+    PredictResponse,
+)
 
 app = FastAPI(title="Churn Prediction API")
 

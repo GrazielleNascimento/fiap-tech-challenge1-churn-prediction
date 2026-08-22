@@ -7,7 +7,7 @@ import joblib
 from sklearn.model_selection import StratifiedKFold
 from sklearn.pipeline import Pipeline
 
-from src.common.config import (
+from churn_prediction.common.config import (
     CHAMPION_NAME,
     CHAMPION_THRESHOLD,
     DATA_PATH,
@@ -16,9 +16,9 @@ from src.common.config import (
     N_SPLITS,
     RANDOM_STATE,
 )
-from src.train.evaluation import cross_validate_model
-from src.train.model import build_model
-from src.train.preprocessing import (
+from churn_prediction.train.evaluation import cross_validate_model
+from churn_prediction.train.model import build_model
+from churn_prediction.train.preprocessing import (
     load_dataset,
     split_features_target,
 )

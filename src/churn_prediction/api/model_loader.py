@@ -6,7 +6,7 @@ from typing import TypedDict
 import joblib
 from sklearn.pipeline import Pipeline
 
-from src.common.config import MODEL_PATH
+from churn_prediction.common.config import MODEL_PATH
 
 
 class ModelArtifact(TypedDict):

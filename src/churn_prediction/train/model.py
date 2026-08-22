@@ -3,8 +3,8 @@
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 
-from src.common.config import RANDOM_STATE
-from src.train.preprocessing import build_preprocessor
+from churn_prediction.common.config import RANDOM_STATE
+from churn_prediction.train.preprocessing import build_preprocessor
 
 
 def build_model() -> Pipeline:

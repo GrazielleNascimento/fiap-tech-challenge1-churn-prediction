@@ -1,9 +1,9 @@
-"""Testes relativos à src/train/main."""
+"""Testes relativos à churn_prediction/train/main."""
 
 import joblib
 from sklearn.dummy import DummyClassifier
 
-import src.train.main as train_main
+import churn_prediction.train.main as train_main
 
 
 def test_save_artifact(tmp_path, monkeypatch) -> None:

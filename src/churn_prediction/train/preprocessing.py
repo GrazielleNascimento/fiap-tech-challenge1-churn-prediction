@@ -1,4 +1,4 @@
-"""Fornece de preprocessamento para WA_Fn-UseC_-Telco-Customer-Churn.csv."""
+"""Fornece de preprocessamento para `WA_Fn-UseC_-Telco-Customer-Churn.csv`."""
 
 from pathlib import Path
 
@@ -8,7 +8,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.common.config import (
+from churn_prediction.common.config import (
     CATEGORICAL_COLUMNS,
     ID_COLUMN,
     NUMERIC_COLUMNS,
