@@ -3,6 +3,8 @@
 from pathlib import Path
 
 RANDOM_STATE = 42
+N_SPLITS = 5
+
 CHAMPION_NAME = "ensemble_gb_threshold_0.35"
 CHAMPION_THRESHOLD = 0.35
 

@@ -36,19 +36,19 @@ def build_preprocessor() -> ColumnTransformer:
         [
             ("imputer", SimpleImputer(strategy="median")),
             ("scaler", StandardScaler()),
-        ]
+        ],
     )
 
     categorical_pipeline = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="most_frequent")),
             ("onehot", OneHotEncoder(handle_unknown="ignore")),
-        ]
+        ],
     )
 
     return ColumnTransformer(
         [
             ("num", numeric_pipeline, NUMERIC_COLUMNS),
             ("cat", categorical_pipeline, CATEGORICAL_COLUMNS),
-        ]
+        ],
     )
