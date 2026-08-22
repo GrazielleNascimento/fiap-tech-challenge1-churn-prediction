@@ -39,8 +39,11 @@ venv.bak/
 # Visual Studio Code
 .vscode/
 
-# Ruff stuff:
+# Ruff
 .ruff_cache/
+
+# MyPy
+.mypy_cache/
 
 # OS generated files
 .DS_Store
