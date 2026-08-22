@@ -1,5 +1,35 @@
+[project]
+name = "churn-prediction"
+version = "1.0.0"
+requires-python = ">=3.12"
+
+dependencies = [
+    "pandas>=2.2,<3",
+    "numpy>=1.26,<3",
+    "matplotlib>=3.8,<4",
+    "scikit-learn==1.8.0",
+    "joblib>=1.4,<2",
+    "fastapi>=0.110,<1",
+    "uvicorn[standard]>=0.28,<1",
+    "httpx2>=2.12.0,<3",
+    "imblearn>=0.0.0,<1",
+    "requests>=2.34.2",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29,<7",
+    "pytest>=8,<9",
+    "ruff",
+    "mypy",
+    "pandas-stubs",
+    "scikit-learn-stubs",
+    "joblib-stubs"
+]
+
 [tool.ruff.lint]
+select = ["ALL"]
 ignore = ["CPY001"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101", "ANN001", "D103"]
+"tests/*" = ["S101", "ANN001", "D103", "D104"]
