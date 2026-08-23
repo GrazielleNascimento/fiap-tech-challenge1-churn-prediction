@@ -8,6 +8,7 @@ O código da aplicação está organizado em `src/churn_prediction`, com módulo
 
 Para conhecer o contexto de negócio, as premissas e as características da solução:
 
+* [Vídeo](https://youtu.be/OFtwp7pTops)
 * [ML Canvas](docs/manual/ml_canvas.md)
 * [Model Card](docs/manual/model_card.md)
 
