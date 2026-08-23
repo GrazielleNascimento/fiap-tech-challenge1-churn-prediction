@@ -1,0 +1,1 @@
+"""Scripts compartilhados entre aplicativos."""
